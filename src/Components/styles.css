@@ -1,0 +1,69 @@
+.localVideo{
+    grid-column: 1;
+    border-radius: 25px;
+    display:flex;
+    justify-content: center;
+    margin:20px;
+    margin-left: auto;
+    margin-right: auto;
+    border: 10px solid #93A8AC;
+}
+.remoteVideo{
+    grid-column: 2;
+    grid-row:1;
+    border-radius: 25px;
+    overflow: hidden;
+    display:flex;
+    justify-content: center;
+    margin:20px;
+    margin-left: auto;
+    margin-right: auto;
+    background-color:#211D3D;
+    border: 10px solid #93A8AC;
+
+}
+.videos{
+    background-color: #2E294E;
+    grid-template-columns: repeat(2, 50% );
+    display:grid;
+}
+
+.callButtons{
+    border:none;
+    color:white;
+    height:60px;
+    width:60px;
+    margin:20px;
+    text-align: center;
+    text-decoration: none;
+    font-size:1rem;
+    background: linear-gradient(180deg, #FF7F11 0%, #2E294E 473.86%);
+    filter: drop-shadow(0px 4px 12px rgba(0, 0, 0, 0.25));
+    border-radius: 50%;
+    cursor:pointer;
+
+}
+.callButtons:disabled{
+    background-color: linear-gradient(180deg, #FF7F11 0%, #2E294E 473.86%);
+    opacity: 30%;
+    cursor:initial;
+}
+.callActions{
+    display:flex ;
+    justify-content: center;
+
+}
+
+.connection-text{
+    grid-column: 2;
+    grid-row:1;
+    background-color: #2E294E;
+    font-size: 2rem;
+    color:white;
+    font-family: Arial, Helvetica, sans-serif;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
