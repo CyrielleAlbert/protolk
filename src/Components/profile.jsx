@@ -1,33 +1,54 @@
-import React from 'react'
+import { connect,useDispatch } from 'react-redux'
 
-var id = 0;
-export const ONLINE = "ONLINE"
-export const ON_COMMUNICATION = "ON_COMMUNICATION"
-export const WAITING = "WAITING"
-export const OFFLINE = "OFFLINE"
+import { profileSelector } from '../Store/profileSelectors'
 
-export const userProfile = 
-    {
-        "id":++id, 
-        "name":"Cyrielle", //Str
-        "surname":"Albert", //Str
-        "jobTitle":"Software Engineer",
-        "lastConnection":"22-05-21", //Date
+import { disconnectUser, connectUser, modifyUser } from "../Store/profileActions"
+import { useRef } from 'react'
+
+
+export function ProfileInfo() {
+    const firstName = useRef(null)
+    const lastName = useRef(null)
+    const jobTitle = useRef(null)
+
+    const dispatch = useDispatch()
+
+    const handleSubmit = event => {
+        event.preventDefault()
+        dispatch(connectUser({ 
+            firstName: firstName.current.value, 
+            lastName: lastName.current.value, 
+            jobTitle: jobTitle.current.value
+        }))
     }
 
-export function userProfileComponent(userProfile){
     return (
         <div>
-            <div>
-                Name: {userProfile.name}
-            </div>
-            <div>
-                Surname: {userProfile.surname}
-            </div>
-            <div>
-                Job Title: {userProfile.jobTitle}
-            </div>
+            <form onSubmit={handleSubmit}>
+                <label>
+                    First name:
+                <input type="text" placeHolder='First name' ref={firstName} />
+                </label>
+                <label>
+                    Last name:
+                <input type="text" placeHolder='Last name' ref={lastName} />
+                </label>
+                <label>
+                    Job title:
+                <input type="text" placeHolder='Job Title' ref={jobTitle} />
+                </label>
+                <button>Connect!</button>
+            </form>
         </div>
     )
-}
 
+}
+export const ProfileStore = connect(
+    (state) => ({
+        profile: profileSelector(state)
+    }),
+    (dispatch) => ({
+        connectUser: (userInfo) => dispatch(connectUser(userInfo)),
+        disconnectUser: () => dispatch(disconnectUser())
+    })
+)(ProfileInfo)

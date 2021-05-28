@@ -3,9 +3,12 @@ import { connect } from 'react-redux'
 
 import { roomsSelector } from '../Store/roomsSelectors'
 
-import { userProfile,WAITING,ONLINE,ON_COMMUNICATION,OFFLINE } from "../Components/profile"
 import { userJoinRoomAction, userLeftRoomAction } from '../Store/roomsActions'
 
+const ONLINE = "ONLINE"
+const ON_COMMUNICATION = "ON_COMMUNICATION"
+const OFFLINE = "OFFLINE"
+const userProfile = {}
 var userInfo = {
     ...userProfile, 
     userSession: {
