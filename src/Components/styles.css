@@ -8,6 +8,7 @@
     margin-right: auto;
     border: 10px solid #93A8AC;
 }
+
 .remoteVideo{
     grid-column: 2;
     grid-row:1;
@@ -22,6 +23,7 @@
     border: 10px solid #93A8AC;
 
 }
+
 .videos{
     background-color: #2E294E;
     grid-template-columns: repeat(2, 50% );
@@ -43,11 +45,13 @@
     cursor:pointer;
 
 }
+
 .callButtons:disabled{
     background-color: linear-gradient(180deg, #FF7F11 0%, #2E294E 473.86%);
     opacity: 30%;
     cursor:initial;
 }
+
 .callActions{
     display:flex ;
     justify-content: center;
@@ -66,4 +70,13 @@
     justify-content: center;
     align-items: center;
     text-align: center;
+}
+.your-profile{
+    border-radius: 25px;
+    justify-content: center;
+    margin:20px;
+    margin-left: auto;
+    margin-right: auto;
+    border: 10px solid #93A8AC;
+    background-color: antiquewhite;
 }

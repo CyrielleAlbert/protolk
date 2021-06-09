@@ -3,9 +3,10 @@ import './App.css';
 import React, { Component } from 'react';
 import { Provider } from 'react-redux';
 import Store from './Store';
-import { RoomStore } from './Components/room'
-import adapter from 'webrtc-adapter';
 import VideoSession from './Components/videoSession'
+import Home from "./Pages/Home"
+import SessionPage from "./Pages/SessionPage.jsx"
+import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom'
 
 
 class App extends Component {
@@ -17,13 +18,18 @@ class App extends Component {
   render() {
     return (
       <div style={{ backgroundColor: "#2E294E", height: window.innerHeight }}>
-        <div style={{display:'flex',justifyContent:'center',width:'100%',marginBottom:50}}>
+        <div style={{ display: 'flex', justifyContent: 'center', width: '100%', marginBottom: 50 }}>
           <img src="/Protolk-logo-name.png" style={{ width: 150, height: "auto" }} />
         </div>
         <Provider store={Store} >
-          <div>
-            <VideoSession />
-          </div>
+          <BrowserRouter>
+            <div>
+              <Switch>
+                <Route path="/" component={Home} exact />
+                <Route path="/Session" component = {SessionPage} />
+              </Switch>
+            </div>
+          </BrowserRouter>
         </Provider>
       </div>
     );

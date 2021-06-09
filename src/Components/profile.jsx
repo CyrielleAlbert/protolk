@@ -5,12 +5,10 @@ import { profileSelector } from '../Store/profileSelectors'
 import { disconnectUser, connectUser, modifyUser } from "../Store/profileActions"
 import { useRef } from 'react'
 
-
 export function ProfileInfo() {
     const firstName = useRef(null)
     const lastName = useRef(null)
     const jobTitle = useRef(null)
-
     const dispatch = useDispatch()
 
     const handleSubmit = event => {

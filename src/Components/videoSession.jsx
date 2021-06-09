@@ -6,14 +6,14 @@ import "./animation.css"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faMicrophone, faMicrophoneSlash, faVideo, faVideoSlash, faDesktop, faShare } from '@fortawesome/free-solid-svg-icons'
 import uuid from 'react-uuid'
-
+import Store from '../Store'
 //TODO: leave room when peer disconnected
 //TODO: handle errors
 
 class VideoSession extends React.Component {
     constructor() {
         super();
-        this.userId= uuid()
+        this.userId = uuid()
         this.state = {
             localStream: {},
             remoteStreamUrl: '',
@@ -23,7 +23,7 @@ class VideoSession extends React.Component {
             full: false,
             connecting: false,
             waiting: true,
-            micState: false,
+            micState: true,
             camState: true,
             ready: false,
             remoteVideo: {}
@@ -31,22 +31,25 @@ class VideoSession extends React.Component {
         this.state.remoteVideo.srcObject = undefined
         this.userInfo = {}
         //TODO: use redux for userInfo
-        this.userInfo[this.userId]={
-            name:"Cyrielle",
-            surname:"Albert",
-            jobTitle:"Software engineer"
+        this.userInfo[this.userId] = {
+            name: "Cyrielle",
+            surname: "Albert",
+            jobTitle: "Software engineer"
         }
+        this.profile = Store.getState().profile
     }
     userSession = new UserSession();
 
     componentDidMount() {
         console.log(this.userInfo)
-        const socket = io("https://8d258679911a.eu.ngrok.io", {query:{
-            userId: this.userId,
-            name: this.userInfo[this.userId].name,
-            surname: this.userInfo[this.userId].surname,
-            jobTitle:this.userInfo[this.userId].jobTitle,
-        }});
+        const socket = io("https://localhost:8888", {
+            query: {
+                userId: this.userId,
+                name: this.userInfo[this.userId].name,
+                surname: this.userInfo[this.userId].surname,
+                jobTitle: this.userInfo[this.userId].jobTitle,
+            }
+        });
         const component = this;
         this.setState({ socket });
         this.getUserMedia().then(() => {
@@ -66,7 +69,7 @@ class VideoSession extends React.Component {
             component.call(data);
         });
         socket.on('disconnected', () => {
-            component.setState({ initiator: true, ready:false,connecting:false,waiting:true });
+            component.setState({ initiator: true, ready: false, connecting: false, waiting: true });
         });
         socket.on('full', () => {
             component.setState({ full: true });
@@ -204,7 +207,17 @@ class VideoSession extends React.Component {
                         </div>
                     }
                 </div>
-
+                <div className="your-profile">
+                    <div>
+                        {this.profile.firstName}
+                    </div>
+                    <div>
+                        {this.profile.lastName}
+                    </div>
+                    <div>
+                        {this.profile.jobTitle}
+                    </div>
+                </div>
 
                 <div className="callActions">
                     <button
