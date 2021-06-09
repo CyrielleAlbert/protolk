@@ -1,0 +1,58 @@
+.hello{
+    display:grid;
+    grid-template-columns: 10% 35% 10% 35% 10%;
+    grid-template-rows: 150px 75px 250px 65px 60px;
+}
+.text-a{
+    grid-column-start: 2;
+    grid-column-end: 3;
+    grid-row-start: 3;
+    grid-row-end:4; 
+}
+.title-a{
+    font-family: Playfair Display;
+    font-size: 2rem;
+    font-weight: bolder;
+}
+.presentation-a{
+    font-family: 'Poppins';
+    font-size: 1rem;
+    text-align: justify;
+    font-weight:lighter;
+    margin-top:10px;
+
+}
+.button-cta{
+    grid-column-start: 2;
+    grid-column-end: 3;
+    grid-row-start: 5;
+    grid-row-end:6; 
+    display:flex;
+    justify-content: center;
+
+}
+.button{
+    background: linear-gradient(180deg, #FF7F11 0%, #2E294E 473.86%);
+    border-radius: 19px;
+    padding:15px;
+    font-size:1rem;
+    color:white;
+    transition-duration: 0.1s;
+    border:0px;
+    cursor:pointer;
+    font-family: 'Poppins';
+
+}
+.button:hover{
+    background:linear-gradient(180deg, #E07112 0%, #2E294E 473.86%);
+}
+.connection-illus-b{
+    grid-column-start:4;
+    grid-column-end: 5;
+    grid-row-start:2;
+    grid-row-end:6;
+}
+.SVGimg{
+    height:450px;
+}
+p { margin:0 }
