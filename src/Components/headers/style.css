@@ -5,16 +5,48 @@
     background: #2E294E;
     display:flex;
     justify-content: center; 
-    left:0px;
-    top:0px;
+    
 }
 .header2{
     position: absolute;
-    width: 1440px;
-    height: 100px;
+    width: 100%;
     background: #2E294E;
+    display:grid;
+    grid-template-columns: 50% 5% 15% 15% 15%;
+    grid-template-rows: 75px;
+    font-family: 'Poppins';
+    font-size: 1rem;
+    color:white;
 }
 .logo{
     margin:10px;
     width: auto;
+}
+.logo-left{
+    grid-column-start: 1;
+    grid-column-end: 2;
+    display:flex;
+    justify-content: left;
+}
+.rooms{
+    grid-column-start: 3;
+    grid-column-end: 4;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+}
+.network{
+    grid-column-start: 4;
+    grid-column-end: 5;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+
+}
+.profile{
+    grid-column-start: 5;
+    grid-column-end: 6;
+    display:flex;
+    justify-content: center;
+    align-items: center;
 }
