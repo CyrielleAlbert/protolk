@@ -1,8 +1,6 @@
 import React from 'react'
 import { Component } from 'react';
-import { Provider } from 'react-redux';
 import Store from '../Store';
-import { ProfileInfo } from '../Components/profile'
 import { NavLink } from 'react-router-dom'
 import { Header1 } from '../Components/headers/header1';
 import "./Home-styles.css"
@@ -19,7 +17,7 @@ class Home extends Component {
         return (
             <div>
                 <Header1 />
-                <div className="hello">
+                <div className="content-grid">
                     <div className="text-a">
                         <div className="title-a">
                             Where professional networking has no border.

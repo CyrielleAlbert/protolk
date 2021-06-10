@@ -22,7 +22,7 @@ class App extends Component {
               <Switch>
                 <Route path="/" component={Home} exact />
                 <Route path="/Session" component = {SessionPage} />
-                {/*<Route path="/app/login" component = {Login}/>*/}
+                <Route path="/app/login" component = {Login}/>
               </Switch>
             </div>
           </BrowserRouter>

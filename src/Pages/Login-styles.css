@@ -1,0 +1,44 @@
+.page{
+    background-color: #2E294E;
+    font-family: 'Poppins';
+    width:100%;
+    color:white;
+}
+.content-grid{
+    display:grid;
+    grid-template-columns: 10% 35% 10% 35% 10%;
+    grid-template-rows: 150px 75px 250px 65px 60px;
+}
+.left-a{
+    grid-column-start: 2;
+    grid-column-end: 3;
+    grid-row-start: 3;
+    grid-row-end:4; 
+}
+.welcome-a{
+    font-size: 2rem;
+    font-weight:bolder;
+
+}
+.linkedIn-a{
+    width:100%;
+    margin-top:50px;
+    margin-bottom: 50px;
+    display:flex;
+    justify-content: center;
+}
+.linkedInImage{
+    cursor: pointer;
+}
+
+.explanation-a{
+    font-size:1rem;
+    text-align: justify;
+    font-weight:lighter;
+}
+.login-illus-b{
+    grid-column-start:4;
+    grid-column-end: 5;
+    grid-row-start:2;
+    grid-row-end:6;  
+}
