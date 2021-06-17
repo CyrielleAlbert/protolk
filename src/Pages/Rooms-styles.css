@@ -1,0 +1,23 @@
+.page{
+    background:white;
+    font-family:'Poppins';
+    display:flex;
+}
+
+
+.content-rooms {
+    font-weight:bold;
+    font-size: 1rem;
+    margin-left:10px;
+    margin-right:10px;
+    margin-top: 10px;
+    
+}
+.title-a{
+    font-family: 'Poppins';
+    font-weight: normal;
+    font-size: 1.5rem;
+    display: flex;
+    justify-content: center;
+    margin-top: 50px;
+}
