@@ -4,4 +4,5 @@ import Network from "./Network"
 import Rooms from "./Rooms"
 import SessionPage from "./SessionPage"
 import Conversation from "./Conversation"
-export { Home, Login, Network, Rooms, SessionPage, Conversation };
+import ConnectionToPeer from "./ConnectionToPeer"
+export { Home, Login, Network, Rooms, SessionPage, Conversation, ConnectionToPeer };
