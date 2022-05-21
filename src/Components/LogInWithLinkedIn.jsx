@@ -17,7 +17,7 @@ export const LogInWithLinkedIn = ({ value, style }) => {
       params: {
         grant_type: "authorization_code",
         code: code,
-        redirect_uri: "http://localhost:3000/Home",
+        redirect_uri: "http://protolk.netlify.app/Home",
         client_id: env.CLIENT_ID,
         client_secret: env.CLIENT_SECRET,
       },
