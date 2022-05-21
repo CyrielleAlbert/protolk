@@ -18,8 +18,8 @@ export const LogInWithLinkedIn = ({ value, style }) => {
         grant_type: "authorization_code",
         code: code,
         redirect_uri: "http://protolk.netlify.app/Home",
-        client_id: env.CLIENT_ID,
-        client_secret: env.CLIENT_SECRET,
+        client_id: process.env.REACT_APP_CLIENT_ID,
+        client_secret: process.env.REACT_APP_CLIENT_SECRET,
       },
       headers: {
         "Content-Type": "application/x-www-form-urlencoded",
@@ -37,7 +37,7 @@ export const LogInWithLinkedIn = ({ value, style }) => {
 
   return (
     <LinkedIn
-      clientId={env.CLIENT_ID}
+      clientId={process.env.REACT_APP_CLIENT_ID}
       redirectUri={`${window.location.origin}/linkedin`}
       onSuccess={(code) => {
         console.log(code);
