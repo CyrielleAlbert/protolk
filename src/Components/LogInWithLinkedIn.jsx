@@ -1,51 +1,23 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { LinkedIn } from "react-linkedin-login-oauth2";
-import axios from "axios";
+import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
+import { getAccessToken, getProfileInfo } from "../Requests/linkedinRequests";
 
 export const LogInWithLinkedIn = ({ value, style }) => {
+  const history = useHistory();
   const [bgColor, setBgColor] = useState("#FFFFFF");
-  const [token, setToken] = useState("");
+  const [token, setToken] = useState(undefined);
+  const [profile, setProfile] = useState(undefined);
 
-  const getAccessToken = (code) => {
-    const headers = {
-      "Content-Type": "application/x-www-form-urlencoded",
-    };
-    axios({
-      method: "post",
-      baseURL: "https://www.linkedin.com",
-      url: "/oauth/v2/accessToken",
-      params: {
-        grant_type: "authorization_code",
-        code: code,
-        redirect_uri: "http://protolk.netlify.app/Home",
-        client_id: process.env.REACT_APP_CLIENT_ID,
-        client_secret: process.env.REACT_APP_CLIENT_SECRET,
-      },
-      headers: {
-        "Content-Type": "application/x-www-form-urlencoded",
-        "Access-Control-Allow-Origin": "*"
-      },
-    })
-      .then((response) => {
-        console.log(response);
-        setToken(response.access_token);
-      })
-      .catch((error) => {
-        console.log("error", error);
-      });
-  };
-
+  useEffect(() => {
+    if (token) {
+      console.log("Token fetched");
+      getProfileInfo(token, setProfile);
+    }
+  }, [token]);
   return (
-    <LinkedIn
-      clientId={process.env.REACT_APP_CLIENT_ID}
-      redirectUri={`${window.location.origin}/linkedin`}
-      onSuccess={(code) => {
-        console.log(code);
-        getAccessToken(code);
-      }}
-      scope={"r_emailaddress r_liteprofile"}
-    >
-      {({ linkedInLogin }) => (
+    <>
+      {profile ? (
         <div
           onMouseEnter={() => {
             setBgColor("#FFFFFF");
@@ -61,14 +33,50 @@ export const LogInWithLinkedIn = ({ value, style }) => {
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
-            maxWidth: 200,
             ...style,
           }}
-          onClick={linkedInLogin}
+          onClick={() => {
+            history.push("/Home");
+          }}
         >
-          {value} <img src="/linkedin.svg" width={48} height={48} />
+          {`Log in as ${profile.localizedFirstName} ${profile.localizedLastName}`}
+          <img src="/linkedin.svg" width={48} height={48} />
         </div>
+      ) : (
+        <LinkedIn
+          clientId={process.env.REACT_APP_CLIENT_ID}
+          redirectUri={`${window.location.origin}/linkedin`}
+          onSuccess={(code) => {
+            getAccessToken(code, setToken);
+          }}
+          scope={"r_emailaddress r_liteprofile"}
+        >
+          {({ linkedInLogin }) => (
+            <div
+              onMouseEnter={() => {
+                setBgColor("#FFFFFF");
+              }}
+              onMouseLeave={() => setBgColor("#FFFFFF")}
+              style={{
+                backgroundColor: bgColor,
+                padding: "15px 20px 15px 20px",
+                color: "black",
+                fontSize: "1.5rem",
+                borderRadius: 16,
+                cursor: "pointer",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                maxWidth: 200,
+                ...style,
+              }}
+              onClick={linkedInLogin}
+            >
+              {value} <img src="/linkedin.svg" width={48} height={48} />
+            </div>
+          )}
+        </LinkedIn>
       )}
-    </LinkedIn>
+    </>
   );
 };
