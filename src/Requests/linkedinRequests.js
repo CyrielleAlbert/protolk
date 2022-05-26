@@ -14,7 +14,7 @@ export function getAccessToken(code, setToken) {
     },
   })
     .then((res) => {
-      console.log(res.data)
+      console.log(res.data);
       setToken(res.data.access_token);
     })
     .catch((error) => {
@@ -22,7 +22,7 @@ export function getAccessToken(code, setToken) {
     });
 }
 
-export function getProfileInfo(token, callback) {
+export function getProfileInfo(token, callback) { 
   axios({
     method: "get",
     baseURL: "http://localhost:8888",

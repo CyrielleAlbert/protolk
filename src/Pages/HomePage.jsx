@@ -37,7 +37,7 @@ export const HomePage = () => {
           </p>
           <Butt
             value={"Start networking"}
-            onClick={() => {history.push("/Connect")}}
+            onClick={() => {history.push("/Login")}}
             style={{ marginTop: 20 }}
           />
         </div>

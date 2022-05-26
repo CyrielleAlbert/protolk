@@ -2,7 +2,7 @@ import { BottomBar } from "../Components/BottomBar";
 import { LogInWithLinkedIn } from "../Components/LogInWithLinkedIn";
 import { TopBar } from "../Components/TopBar";
 
-export const ConnectPage = () => {
+export const LoginPage = () => {
 
   return (
     <div

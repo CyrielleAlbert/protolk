@@ -1,13 +1,19 @@
 import { useEffect, useState } from "react";
 import { LinkedIn } from "react-linkedin-login-oauth2";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
-import { getAccessToken, getProfileInfo } from "../Requests/linkedinRequests";
+import { getAccessToken, getProfileInfo } from "../Requests/linkedInRequests";
+import { useCookies } from "react-cookie";
 
 export const LogInWithLinkedIn = ({ value, style }) => {
   const history = useHistory();
   const [bgColor, setBgColor] = useState("#FFFFFF");
   const [token, setToken] = useState(undefined);
   const [profile, setProfile] = useState(undefined);
+  const [cookies, setCookie] = useCookies(["SESSION_ID"]);
+
+  useEffect(() => {
+    setToken(cookies.SESSION_ID);
+  }, [cookies.SESSION_ID]);
 
   useEffect(() => {
     if (token) {
@@ -15,6 +21,11 @@ export const LogInWithLinkedIn = ({ value, style }) => {
       getProfileInfo(token, setProfile);
     }
   }, [token]);
+
+  const updateCookie = (value) => {
+    setCookie("SESSION_ID", value, { path: "/" });
+  };
+
   return (
     <>
       {profile ? (
@@ -36,7 +47,7 @@ export const LogInWithLinkedIn = ({ value, style }) => {
             ...style,
           }}
           onClick={() => {
-            history.push("/Home");
+            history.push("/");
           }}
         >
           {`Log in as ${profile.localizedFirstName} ${profile.localizedLastName}`}
@@ -47,7 +58,7 @@ export const LogInWithLinkedIn = ({ value, style }) => {
           clientId={process.env.REACT_APP_CLIENT_ID}
           redirectUri={`${window.location.origin}/linkedin`}
           onSuccess={(code) => {
-            getAccessToken(code, setToken);
+            getAccessToken(code, updateCookie);
           }}
           scope={"r_emailaddress r_liteprofile"}
         >
