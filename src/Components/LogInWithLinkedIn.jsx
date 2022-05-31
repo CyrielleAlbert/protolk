@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { LinkedIn } from "react-linkedin-login-oauth2";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
-import { getAccessToken, getProfileInfo } from "./../Requests/linkedInRequests";
+import { getAccessToken, getProfileInfo } from "../Requests/linkedinRequests";
 import { useCookies } from "react-cookie";
 
 export const LogInWithLinkedIn = ({ value, style }) => {
