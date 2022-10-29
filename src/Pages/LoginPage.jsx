@@ -3,7 +3,6 @@ import { LogInWithLinkedIn } from "../Components/LogInWithLinkedIn";
 import { TopBar } from "../Components/TopBar";
 
 export const LoginPage = () => {
-
   return (
     <div
       style={{
@@ -28,10 +27,7 @@ export const LoginPage = () => {
         >
           <h1>Welcome on Protolk.</h1>
           <div style={{ display: "flex", justifyContent: "center" }}>
-            <LogInWithLinkedIn
-              value={"Log in with"}
-              style={{ margin: 20 }}
-            />
+            <LogInWithLinkedIn value={"Log in with"} style={{ margin: 15 }} />
           </div>
           <p
             style={{
