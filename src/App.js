@@ -9,7 +9,8 @@ import { HomePage } from "./Pages/HomePage";
 import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
 import { LoginPage } from "./Pages/LoginPage";
 import { LinkedInCallback } from "react-linkedin-login-oauth2";
-
+import * as Router from "./router.js";
+import { Dashboard } from "./Pages/Dashboard";
 class App extends Component {
   constructor() {
     super();
@@ -22,8 +23,13 @@ class App extends Component {
           <div>
             <Switch>
               <Route path="/" component={HomePage} exact />
-              <Route exact path="/linkedin" component={LinkedInCallback} />
-              <Route path="/Login" component={LoginPage} />
+              <Route
+                exact
+                path={Router.path.linkedin}
+                component={LinkedInCallback}
+              />
+              <Route path={Router.path.login} component={LoginPage} />
+              <Route path={Router.path.dashboard} component={Dashboard} />
               <Route path="/Session" component={SessionPage} />
             </Switch>
           </div>

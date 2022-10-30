@@ -1,12 +1,23 @@
+import { useEffect } from "react";
 import { useState } from "react";
 import { LinkedIn } from "react-linkedin-login-oauth2";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import { useLinkedInProfile } from "../Requests/useLinkedInProfile";
+import * as Router from "../router.js";
 
 export const LogInWithLinkedIn = ({ value, style }) => {
   const history = useHistory();
   const [bgColor, setBgColor] = useState("#FFFFFF");
-  const { loading, profile, getAccessToken } = useLinkedInProfile();
+  const { loading, profile, getAccessToken, createUserInDB } =
+    useLinkedInProfile();
+
+  useEffect(() => {
+    //Might move to useLinkedInProfile with handling disconnection
+    if (profile) {
+      createUserInDB();
+      history.push(Router.path.dashboard);
+    }
+  }, [profile]);
 
   return (
     <>
@@ -29,7 +40,7 @@ export const LogInWithLinkedIn = ({ value, style }) => {
             ...style,
           }}
           onClick={() => {
-            history.push("/");
+            history.push(Router.path.dashboard);
           }}
         >
           {`Log in as ${profile.localizedFirstName} ${profile.localizedLastName}`}
@@ -38,7 +49,7 @@ export const LogInWithLinkedIn = ({ value, style }) => {
       ) : (
         <LinkedIn
           clientId={process.env.REACT_APP_CLIENT_ID}
-          redirectUri={`${window.location.origin}/linkedin`}
+          redirectUri={`${window.location.origin}${Router.path.linkedin}`}
           onSuccess={(code) => {
             getAccessToken(code);
           }}

@@ -1,4 +1,3 @@
-import React from "react";
 import axios from "axios";
 import { useEffect } from "react";
 import { useState } from "react";
@@ -8,7 +7,7 @@ export const useLinkedInProfile = (code) => {
   const [token, setToken] = useState(undefined);
   const [profile, setProfile] = useState(undefined);
   const [loading, setLoading] = useState(false);
-  const [cookies, setCookie] = useCookies(["SESSION_ID"]);
+  const [cookies, setCookie, removeCookie] = useCookies(["SESSION_ID"]);
 
   const updateCookie = (value) => {
     setCookie("SESSION_ID", value, { path: "/" });
@@ -58,6 +57,7 @@ export const useLinkedInProfile = (code) => {
       },
     })
       .then((res) => {
+        console.log(res.data); //image info
         setProfile(res.data);
         setLoading(false);
       })
@@ -65,6 +65,46 @@ export const useLinkedInProfile = (code) => {
         console.log("error", error);
         setLoading(false);
       });
+  };
+
+  const disconnectUser = () => {
+    removeCookie("SESSION_ID");
+    initProfile();
+  };
+
+  const initProfile = () => {
+    setToken(undefined);
+    setProfile(undefined);
+  };
+
+  const createUserInDB = () => {
+    if (profile && token) {
+      axios({
+        method: "post",
+        baseURL: "http://localhost:8888",
+        url: "/data/addNewUser",
+        data: {
+          token: token,
+          firstName: profile.firstName.localized.xx_XX,
+          lastName: profile.lastName.localized.xx_XX,
+          id: profile.id,
+          // jobTitle: profile.localizedHeadline
+        },
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Methods": "*",
+        },
+      })
+        .catch((error) => {
+          console.log("error", error);
+        })
+        .then((res) => {
+          console.log(res);
+        });
+    } else {
+      console.log("No profile or token to add to the database");
+    }
   };
 
   useEffect(() => {
@@ -94,6 +134,8 @@ export const useLinkedInProfile = (code) => {
     loading,
     getAccessToken,
     getProfileInfo,
+    createUserInDB,
     updateCookie,
+    disconnectUser,
   };
 };

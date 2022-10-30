@@ -3,9 +3,9 @@ import React from "react";
 import { BottomBar } from "../Components/BottomBar";
 import { Butt } from "../Components/Button";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
-
+import * as Router from "../router";
 export const HomePage = () => {
-  const history = useHistory()
+  const history = useHistory();
   return (
     <div
       style={{
@@ -37,7 +37,9 @@ export const HomePage = () => {
           </p>
           <Butt
             value={"Start networking"}
-            onClick={() => {history.push("/Login")}}
+            onClick={() => {
+              history.push(Router.path.login);
+            }}
             style={{ marginTop: 20 }}
           />
         </div>
