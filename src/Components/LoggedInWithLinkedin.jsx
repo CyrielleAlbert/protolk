@@ -1,10 +1,10 @@
 import { useState } from "react";
-import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
+import { useNavigate } from "react-router-dom";
 import { useLinkedInProfile } from "../Requests/useLinkedInProfile";
 import * as Router from "../router.js";
 
 export const LoggedInWithLinkedIn = ({ style }) => {
-  const history = useHistory();
+  const navigate = useNavigate();
   const [bgColor, setBgColor] = useState("#FFFFFF");
 
   const { profile, disconnectUser } = useLinkedInProfile();
@@ -31,7 +31,7 @@ export const LoggedInWithLinkedIn = ({ style }) => {
       }}
       onClick={() => {
         disconnectUser();
-        history.push(Router.path.login);
+        navigate(Router.path.login);
       }}
     >
       {`Log out ➞`}

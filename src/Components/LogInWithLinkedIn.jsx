@@ -1,12 +1,12 @@
 import { useEffect } from "react";
 import { useState } from "react";
 import { LinkedIn } from "react-linkedin-login-oauth2";
-import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
+import { useNavigate } from "react-router-dom";
 import { useLinkedInProfile } from "../Requests/useLinkedInProfile";
 import * as Router from "../router.js";
 
 export const LogInWithLinkedIn = ({ value, style }) => {
-  const history = useHistory();
+  const navigate = useNavigate();
   const [bgColor, setBgColor] = useState("#FFFFFF");
   const { loading, profile, getAccessToken, createUserInDB } =
     useLinkedInProfile();
@@ -15,7 +15,7 @@ export const LogInWithLinkedIn = ({ value, style }) => {
     //Might move to useLinkedInProfile with handling disconnection
     if (profile) {
       createUserInDB();
-      history.push(Router.path.dashboard);
+      navigate(Router.path.dashboard);
     }
   }, [profile]);
 
@@ -40,11 +40,11 @@ export const LogInWithLinkedIn = ({ value, style }) => {
             ...style,
           }}
           onClick={() => {
-            history.push(Router.path.dashboard);
+            navigate(Router.path.dashboard);
           }}
         >
           {`Log in as ${profile.localizedFirstName} ${profile.localizedLastName}`}
-          <img src="/linkedin.svg" width={48} height={48} />
+          <img alt="linkedin-Icon" src="/linkedin.svg" width={48} height={48} />
         </button>
       ) : (
         <LinkedIn
@@ -80,7 +80,13 @@ export const LogInWithLinkedIn = ({ value, style }) => {
                 <>Loading</>
               ) : (
                 <>
-                  {value} <img src="/linkedin.svg" width={48} height={48} />
+                  {value}{" "}
+                  <img
+                    alt="linkedin-Icon"
+                    src="/linkedin.svg"
+                    width={48}
+                    height={48}
+                  />
                 </>
               )}
             </button>
