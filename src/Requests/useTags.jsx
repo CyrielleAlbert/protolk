@@ -2,7 +2,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 
 export const useTags = ({ token }) => {
-  const [tags, setTags] = useState();
+  const [tags, setTags] = useState(undefined);
 
   useEffect(() => {
     if (token) {
