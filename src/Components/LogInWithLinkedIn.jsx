@@ -1,35 +1,28 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
+import { useState } from "react";
 import { LinkedIn } from "react-linkedin-login-oauth2";
-import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
-import { getAccessToken, getProfileInfo } from "../Requests/linkedinRequests";
-import { useCookies } from "react-cookie";
+import { useNavigate } from "react-router-dom";
+import { useLinkedInProfile } from "../Requests/useLinkedInProfile";
+import * as Router from "../router.js";
 
 export const LogInWithLinkedIn = ({ value, style }) => {
-  const history = useHistory();
+  const navigate = useNavigate();
   const [bgColor, setBgColor] = useState("#FFFFFF");
-  const [token, setToken] = useState(undefined);
-  const [profile, setProfile] = useState(undefined);
-  const [cookies, setCookie] = useCookies(["SESSION_ID"]);
+  const { loading, profile, getAccessToken, createUserInDB } =
+    useLinkedInProfile();
 
   useEffect(() => {
-    setToken(cookies.SESSION_ID);
-  }, [cookies.SESSION_ID]);
-
-  useEffect(() => {
-    if (token) {
-      console.log("Token fetched");
-      getProfileInfo(token, setProfile);
+    //Might move to useLinkedInProfile with handling disconnection
+    if (profile) {
+      createUserInDB();
+      navigate(Router.path.dashboard);
     }
-  }, [token]);
-
-  const updateCookie = (value) => {
-    setCookie("SESSION_ID", value, { path: "/" });
-  };
+  }, [profile]);
 
   return (
     <>
       {profile ? (
-        <div
+        <button
           onMouseEnter={() => {
             setBgColor("#FFFFFF");
           }}
@@ -47,23 +40,23 @@ export const LogInWithLinkedIn = ({ value, style }) => {
             ...style,
           }}
           onClick={() => {
-            history.push("/");
+            navigate(Router.path.dashboard);
           }}
         >
           {`Log in as ${profile.localizedFirstName} ${profile.localizedLastName}`}
-          <img src="/linkedin.svg" width={48} height={48} />
-        </div>
+          <img alt="linkedin-Icon" src="/linkedin.svg" width={48} height={48} />
+        </button>
       ) : (
         <LinkedIn
           clientId={process.env.REACT_APP_CLIENT_ID}
-          redirectUri={`${window.location.origin}/linkedin`}
+          redirectUri={`${window.location.origin}${Router.path.linkedin}`}
           onSuccess={(code) => {
-            getAccessToken(code, updateCookie);
+            getAccessToken(code);
           }}
           scope={"r_emailaddress r_liteprofile"}
         >
           {({ linkedInLogin }) => (
-            <div
+            <button
               onMouseEnter={() => {
                 setBgColor("#FFFFFF");
               }}
@@ -78,13 +71,25 @@ export const LogInWithLinkedIn = ({ value, style }) => {
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
-                maxWidth: 200,
+                minWidth: 210,
                 ...style,
               }}
               onClick={linkedInLogin}
             >
-              {value} <img src="/linkedin.svg" width={48} height={48} />
-            </div>
+              {loading ? (
+                <>Loading</>
+              ) : (
+                <>
+                  {value}{" "}
+                  <img
+                    alt="linkedin-Icon"
+                    src="/linkedin.svg"
+                    width={48}
+                    height={48}
+                  />
+                </>
+              )}
+            </button>
           )}
         </LinkedIn>
       )}

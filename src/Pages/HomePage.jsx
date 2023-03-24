@@ -2,10 +2,10 @@ import { TopBar } from "../Components/TopBar";
 import React from "react";
 import { BottomBar } from "../Components/BottomBar";
 import { Butt } from "../Components/Button";
-import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
-
+import * as Router from "../router";
+import { useNavigate } from "react-router-dom";
 export const HomePage = () => {
-  const history = useHistory()
+  const navigate = useNavigate();
   return (
     <div
       style={{
@@ -37,13 +37,16 @@ export const HomePage = () => {
           </p>
           <Butt
             value={"Start networking"}
-            onClick={() => {history.push("/Login")}}
+            onClick={() => {
+              navigate(Router.path.login);
+            }}
             style={{ marginTop: 20 }}
           />
         </div>
         <div style={{ width: "50%", marginLeft: "5%", marginRight: "5%" }}>
           <img
             src="/connection.png"
+            alt="illustration-connection"
             style={{ margin: "auto", display: "block" }}
             width={"80%"}
             height={"auto"}
